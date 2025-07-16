@@ -33,11 +33,32 @@
     <script>
         async function shortener(){
             const url = document.getElementById("url").value;
-            const response = await fetch(`/api/shortener?url=${encodeURIComponent(url)}`, {
-                method: 'POST'
-            });
-            const shortUrl = await response.text();
-            document.getElementById("result").innerHTML = `Shortener URL: <a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+            const result = document.getElementById("result");
+
+            if(!url.startsWith("http://") && !url.startsWith("https://")){
+                result.innerHTML = "<p class='erro'> The URL must start with http:// or https://<p>";
+                return;
+            }
+
+            result.innerHTML = "<p class='loaing'> Shortener URL... </p>";
+
+            try{
+                const response = await fetch(`/api/shorten?url=${encodeURIComponent(url)}`,{
+                    method: 'POST'
+                });
+            
+
+            const text = await response.text();
+
+            if(!response.ok){
+                result.innerHTML = `<p class='error'> Erro: ${text}</p>`; 
+            } else{
+                result.innerHTML = `<p class='sucess'> SHortener URL: <a href="#{text}" target="_blank">${text}</a></p>`;
+            }
+            } 
+            catch (e) {
+                result.innerHTML = "<p class='error'> Network error. Please try again.</p>";
+            }
         }
     </script>
 </body>
