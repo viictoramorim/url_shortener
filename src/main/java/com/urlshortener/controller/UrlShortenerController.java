@@ -23,9 +23,13 @@ public class UrlShortenerController {
     private UrlShortenerService service;
 
     @PostMapping("/shorten")
-    public String shortenUrl(@RequestParam String url){
-        String shortCode = service.ShortenUrl(url);
-        return "http://localhost:8080/" + shortCode;
+    public ResponseEntity<String> shortenUrl(@RequestParam)String url){
+        try{
+            String shortCode = service.shortenUrl(url);
+            return ResponseEntity.ok("htpp://localhost:8080/" + shortCode);
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body("Invalid url: Must start with http:// or https://");
+        }
     }
 
     @GetMapping("/{code}")
