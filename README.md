@@ -27,3 +27,11 @@ O sistema permite que os usuários insiram uma URL longa e recebam uma versão c
 - Netlify.com (Deploy frontend)
 
 ---
+### 1. Configurar o MongoDB Atlas
+spring.data.mongodb.uri=mongodb+srv://usuario:senha@seu-cluster.mongodb.net/urlshortener?retryWrites=true&w=majority
+
+### 2. Rodar o projeto
+./mvnw spring-boot:run
+
+### 3. Acessar no navegador
+Abra http://localhost:8080
